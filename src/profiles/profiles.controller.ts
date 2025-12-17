@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -44,7 +45,7 @@ export class ProfilesController {
   //   };
   // }
   @Post()
-  create(@Body() createProfileDto: CreateProfileDto) {
+  create(@Body(new ValidationPipe()) createProfileDto: CreateProfileDto) {
     return this.profilesService.create(createProfileDto);
   }
 
@@ -59,7 +60,7 @@ export class ProfilesController {
   @Put(':id')
   update(
     @Param('id', ParseUUIDPipe) id: UUID,
-    @Body() updateProfileDto: UpdateProfileDto,
+    @Body(new ValidationPipe()) updateProfileDto: UpdateProfileDto,
   ) {
     return this.profilesService.update(id, updateProfileDto);
   }
